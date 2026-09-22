@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { authRouter } from "./routers/authRouter.js";
+import "./config/passport.js"
 
 const app = express();
 
