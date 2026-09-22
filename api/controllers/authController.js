@@ -1,6 +1,7 @@
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import { prisma } from "../db/prisma.js";
+import jwt from "jsonwebtoken";
 
 export const validateSignUp = [
 	body("username")
@@ -40,6 +41,34 @@ export async function signUp(req, res, next) {
 				.status(400)
 				.json({ errors: [{ msg: "A user with this username already exists" }] });
 		}
+		return next(err);
+	}
+}
+
+export async function logIn(req, res, next) {
+	const { username, password } = req.body;
+
+	try {
+		const user = await prisma.user.findUnique({
+			where: { username: username.toLowerCase() },
+		});
+
+		if (!user) {
+			return res.status(401).json({ message: "Incorrect username or password" });
+		}
+
+		const match = await bcrypt.compare(password, user.password);
+
+		if (!match) {
+			return res.status(401).json({ message: "Incorrect username or password" });
+		}
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+			expiresIn: "1h",
+		});
+
+		res.json({ token });
+	} catch (err) {
 		return next(err);
 	}
 }
