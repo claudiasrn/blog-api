@@ -39,7 +39,9 @@ export async function signUp(req, res, next) {
 		if (err.code === "P2002") {
 			return res
 				.status(400)
-				.json({ errors: [{ msg: "A user with this username already exists" }] });
+				.json({
+					errors: [{ msg: "A user with this username already exists" }],
+				});
 		}
 		return next(err);
 	}
@@ -54,20 +56,27 @@ export async function logIn(req, res, next) {
 		});
 
 		if (!user) {
-			return res.status(401).json({ message: "Incorrect username or password" });
+			return res
+				.status(401)
+				.json({ message: "Incorrect username or password" });
 		}
 
 		const match = await bcrypt.compare(password, user.password);
 
 		if (!match) {
-			return res.status(401).json({ message: "Incorrect username or password" });
+			return res
+				.status(401)
+				.json({ message: "Incorrect username or password" });
 		}
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
 			expiresIn: "1h",
 		});
 
-		res.json({ token });
+		res.json({
+			token,
+			user: { id: user.id, username: user.username, isAuthor: user.isAuthor },
+		});
 	} catch (err) {
 		return next(err);
 	}
