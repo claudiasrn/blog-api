@@ -3,6 +3,7 @@ import cors from "cors";
 import { authRouter } from "./routers/authRouter.js";
 import "./config/passport.js";
 import { postRouter } from "./routers/postRouter.js";
+import { commentRouter } from "./routers/commentRouter.js";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.use("/auth", authRouter);
 app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Not found" });
