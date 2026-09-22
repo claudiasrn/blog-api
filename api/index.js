@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { authRouter } from "./routers/authRouter.js";
-import "./config/passport.js"
+import "./config/passport.js";
+import { postRouter } from "./routers/postRouter.js";
 
 const app = express();
 
@@ -9,6 +10,7 @@ app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5174"] }));
 app.use(express.json());
 
 app.use("/auth", authRouter);
+app.use("/posts", postRouter);
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Not found" });
