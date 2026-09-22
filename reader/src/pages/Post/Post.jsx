@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-import { get, post as postRequest } from "../../lib/api";
+import { get, post as postRequest, put, del } from "../../lib/api";
 import { useAuth } from "../../context/useAuth";
 import CommentForm from "../../components/CommentForm/CommentForm";
+import Comment from "../../components/Comment/Comment";
 
 export default function Post() {
 	const { id } = useParams();
@@ -24,6 +25,18 @@ export default function Post() {
 	async function addComment(body) {
 		const comment = await postRequest(`/posts/${id}/comments`, { body });
 		setComments((current) => [...current, comment]);
+	}
+
+	async function editComment(commentId, body) {
+		const updated = await put(`/comments/${commentId}`, { body });
+		setComments((current) =>
+			current.map((c) => (c.id === commentId ? updated : c)),
+		);
+	}
+
+	async function deleteComment(commentId) {
+		await del(`/comments/${commentId}`);
+		setComments((current) => current.filter((c) => c.id !== commentId));
 	}
 
 	if (error) return <p>{error}</p>;
@@ -55,13 +68,12 @@ export default function Post() {
 				) : (
 					<ul>
 						{comments.map((comment) => (
-							<li key={comment.id}>
-								<strong>{comment.user.username}</strong>
-								<time dateTime={comment.createdAt}>
-									{new Date(comment.createdAt).toLocaleDateString()}
-								</time>
-								<p>{comment.body}</p>
-							</li>
+							<Comment
+								key={comment.id}
+								comment={comment}
+								onEdit={editComment}
+								onDelete={deleteComment}
+							/>
 						))}
 					</ul>
 				)}
