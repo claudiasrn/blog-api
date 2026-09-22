@@ -87,3 +87,37 @@ export async function deleteComment(req, res, next) {
 		next(err);
 	}
 }
+
+export async function updateComment(req, res, next) {
+	const id = Number(req.params.id);
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
+
+	try {
+		const comment = await prisma.comment.findUnique({ where: { id } });
+
+		if (!comment) return res.status(404).json({ message: "Not found" });
+
+		if (comment.userId !== req.user.id && !req.user.isAuthor) {
+			return res.status(403).json({ message: "Forbidden" });
+		}
+
+		const updated = await prisma.comment.update({
+			where: { id },
+			data: { body: req.body.body },
+			select: {
+				id: true,
+				body: true,
+				createdAt: true,
+				user: { select: { id: true, username: true } },
+			},
+		});
+
+		res.json(updated);
+	} catch (err) {
+		next(err);
+	}
+}
