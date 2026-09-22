@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { get } from "../../utils/api";
+import { useParams, Link } from "react-router";
+import { get, post as postRequest } from "../../lib/api";
+import { useAuth } from "../../context/useAuth";
+import CommentForm from "../../components/CommentForm/CommentForm";
 
 export default function Post() {
 	const { id } = useParams();
+	const { user } = useAuth();
 	const [post, setPost] = useState(null);
 	const [comments, setComments] = useState(null);
 	const [error, setError] = useState(null);
@@ -18,6 +21,11 @@ export default function Post() {
 			.catch(() => setComments([]));
 	}, [id]);
 
+	async function addComment(body) {
+		const comment = await postRequest(`/posts/${id}/comments`, { body });
+		setComments((current) => [...current, comment]);
+	}
+
 	if (error) return <p>{error}</p>;
 	if (!post) return <p>Loading…</p>;
 
@@ -31,6 +39,14 @@ export default function Post() {
 
 			<section>
 				<h2>Comments</h2>
+
+				{user ? (
+					<CommentForm onSubmit={addComment} />
+				) : (
+					<p>
+						<Link to="/login">Log in</Link> to comment.
+					</p>
+				)}
 
 				{!comments ? (
 					<p>Loading comments…</p>
