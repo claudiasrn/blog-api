@@ -72,3 +72,7 @@ export async function logIn(req, res, next) {
 		return next(err);
 	}
 }
+
+export function getMe(req, res) {
+	res.json(req.user);
+}
