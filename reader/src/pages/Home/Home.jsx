@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
-import { get } from "../../lib/api";
+import { get } from "../../utils/api";
 
 export default function Home() {
 	const [data, setData] = useState(null);
