@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-import { get, post as postRequest, put, del } from "../../lib/api";
+import { get, post as postRequest, put, del } from "../../utils/api";
 import { useAuth } from "../../context/useAuth";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Comment from "../../components/Comment/Comment";
