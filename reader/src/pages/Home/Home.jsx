@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { get } from "../../lib/api";
+import { stars } from "../../lib/stars";
 
 export default function Home() {
 	const [data, setData] = useState(null);
@@ -30,7 +31,16 @@ export default function Home() {
 							<time dateTime={post.createdAt}>
 								{new Date(post.createdAt).toLocaleDateString()}
 							</time>
+							{post.rating != null && <p>{stars(post.rating)}</p>}
 						</Link>
+
+						{post.tags.length > 0 && (
+							<ul>
+								{post.tags.map((tag) => (
+									<li key={tag}>{tag}</li>
+								))}
+							</ul>
+						)}
 					</li>
 				))}
 			</ul>

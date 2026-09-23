@@ -6,6 +6,8 @@ export default function NewPost() {
 	const navigate = useNavigate();
 	const [title, setTitle] = useState("");
 	const [imageUrl, setImageUrl] = useState("");
+	const [rating, setRating] = useState("");
+	const [tags, setTags] = useState("");
 	const [content, setContent] = useState("");
 	const [error, setError] = useState(null);
 	const [submitting, setSubmitting] = useState(false);
@@ -16,7 +18,16 @@ export default function NewPost() {
 		setSubmitting(true);
 
 		try {
-			await post("/posts", { title, content, imageUrl });
+			await post("/posts", {
+				title,
+				content,
+				imageUrl,
+				rating,
+				tags: tags
+					.split(",")
+					.map((tag) => tag.trim().toLowerCase())
+					.filter(Boolean),
+			});
 			navigate("/");
 		} catch (err) {
 			setError(err.message);
@@ -44,6 +55,24 @@ export default function NewPost() {
 				type="url"
 				value={imageUrl}
 				onChange={(event) => setImageUrl(event.target.value)}
+			/>
+
+			<label htmlFor="rating">Rating (1–5, optional)</label>
+			<input
+				id="rating"
+				type="number"
+				min="1"
+				max="5"
+				value={rating}
+				onChange={(event) => setRating(event.target.value)}
+			/>
+
+			<label htmlFor="tags">Tags (comma separated)</label>
+			<input
+				id="tags"
+				value={tags}
+				onChange={(event) => setTags(event.target.value)}
+				placeholder="taunus, day hike"
 			/>
 
 			<label htmlFor="content">Content</label>

@@ -16,6 +16,8 @@ export async function getPosts(req, res, next) {
 					id: true,
 					title: true,
 					imageUrl: true,
+					rating: true,
+					tags: true,
 					createdAt: true,
 				},
 			}),
@@ -95,6 +97,13 @@ export const validatePost = [
 		.trim()
 		.isURL()
 		.withMessage("Image must be a valid URL"),
+
+	body("rating")
+		.optional({ values: "falsy" })
+		.isInt({ min: 1, max: 5 })
+		.withMessage("Rating must be between 1 and 5"),
+
+	body("tags").optional().isArray({ max: 6 }).withMessage("Too many tags"),
 ];
 
 export async function createPost(req, res, next) {
@@ -104,7 +113,7 @@ export async function createPost(req, res, next) {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	const { title, content, imageUrl } = req.body;
+	const { title, content, imageUrl, rating, tags } = req.body;
 
 	try {
 		const post = await prisma.post.create({
@@ -112,6 +121,8 @@ export async function createPost(req, res, next) {
 				title,
 				content,
 				imageUrl: imageUrl || null,
+				rating: rating ? Number(rating) : null,
+				tags: tags ?? [],
 				authorId: req.user.id,
 			},
 		});

@@ -26,6 +26,8 @@ model Post {
   title     String
   content   String
   imageUrl  String?
+  rating    Int?
+  tags      String[]
   published Boolean   @default(false)
   createdAt DateTime  @default(now())
   authorId  Int

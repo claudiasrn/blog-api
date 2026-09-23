@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { get, post as postRequest, put, del } from "../../lib/api";
+import { stars } from "../../lib/stars";
 import { useAuth } from "../../context/useAuth";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Comment from "../../components/Comment/Comment";
@@ -48,6 +49,16 @@ export default function Post() {
 			<time dateTime={post.createdAt}>
 				{new Date(post.createdAt).toLocaleDateString()}
 			</time>
+
+			{post.rating != null && <p>{stars(post.rating)}</p>}
+
+			{post.tags.length > 0 && (
+				<ul>
+					{post.tags.map((tag) => (
+						<li key={tag}>{tag}</li>
+					))}
+				</ul>
+			)}
 
 			{post.imageUrl && <img src={post.imageUrl} alt="" />}
 

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router";
 import Post from "./Post";
 
-vi.mock("../../utils/api", () => ({
+vi.mock("../../lib/api", () => ({
 	get: vi.fn(),
 	post: vi.fn(),
 	put: vi.fn(),
@@ -14,7 +14,7 @@ vi.mock("../../context/useAuth", () => ({
 	useAuth: vi.fn(),
 }));
 
-import { get } from "../../utils/api";
+import { get } from "../../lib/api";
 import { useAuth } from "../../context/useAuth";
 
 function renderPost() {
@@ -48,6 +48,7 @@ describe("Post", () => {
 						id: 1,
 						title: "Huelva",
 						content: "A week by the sea.",
+						tags: [],
 						createdAt: "2026-09-01T10:00:00.000Z",
 					}),
 		);
@@ -75,6 +76,7 @@ describe("Post", () => {
 						id: 1,
 						title: "Huelva",
 						content: "A week by the sea.",
+						tags: [],
 						createdAt: "2026-09-01T10:00:00.000Z",
 					}),
 		);

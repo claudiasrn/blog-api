@@ -37,6 +37,8 @@ describe("NewPost", () => {
 			title: "Huelva",
 			content: "A week by the sea.",
 			imageUrl: "",
+			rating: "",
+			tags: [],
 		});
 	});
 

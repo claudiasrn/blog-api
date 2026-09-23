@@ -3,18 +3,28 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import Home from "./Home";
 
-vi.mock("../../utils/api", () => ({
+vi.mock("../../lib/api", () => ({
 	get: vi.fn(),
 }));
 
-import { get } from "../../utils/api";
+import { get } from "../../lib/api";
 
 describe("Home", () => {
 	it("renders the posts it receives", async () => {
 		get.mockResolvedValue({
 			posts: [
-				{ id: 1, title: "Huelva", createdAt: "2026-09-01T10:00:00.000Z" },
-				{ id: 2, title: "Frankfurt", createdAt: "2026-09-02T10:00:00.000Z" },
+				{
+					id: 1,
+					title: "Huelva",
+					tags: [],
+					createdAt: "2026-09-01T10:00:00.000Z",
+				},
+				{
+					id: 2,
+					title: "Frankfurt",
+					tags: [],
+					createdAt: "2026-09-02T10:00:00.000Z",
+				},
 			],
 			page: 1,
 			totalPages: 1,
