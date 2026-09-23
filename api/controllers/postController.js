@@ -95,8 +95,8 @@ export const validatePost = [
 	body("imageUrl")
 		.optional({ values: "falsy" })
 		.trim()
-		.isURL()
-		.withMessage("Image must be a valid URL"),
+		.custom((value) => value.startsWith("/") || /^https?:\/\//.test(value))
+		.withMessage("Image must be a URL or a path starting with /"),
 
 	body("rating")
 		.optional({ values: "falsy" })
@@ -141,12 +141,18 @@ export async function updatePost(req, res, next) {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	const { title, content, imageUrl } = req.body;
+	const { title, content, imageUrl, rating, tags } = req.body;
 
 	try {
 		const result = await prisma.post.updateMany({
 			where: { id },
-			data: { title, content, imageUrl: imageUrl || null },
+			data: {
+				title,
+				content,
+				imageUrl: imageUrl || null,
+				rating: rating ? Number(rating) : null,
+				tags: tags ?? [],
+			},
 		});
 
 		if (result.count === 0) {
