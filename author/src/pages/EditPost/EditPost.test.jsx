@@ -55,6 +55,7 @@ describe("EditPost", () => {
 		expect(put).toHaveBeenCalledWith("/posts/1", {
 			title: "Huelva revisited",
 			content: "A week by the sea.",
+			imageUrl: "",
 		});
 	});
 

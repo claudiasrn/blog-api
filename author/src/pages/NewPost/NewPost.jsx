@@ -5,6 +5,7 @@ import { post } from "../../lib/api";
 export default function NewPost() {
 	const navigate = useNavigate();
 	const [title, setTitle] = useState("");
+	const [imageUrl, setImageUrl] = useState("");
 	const [content, setContent] = useState("");
 	const [error, setError] = useState(null);
 	const [submitting, setSubmitting] = useState(false);
@@ -15,7 +16,7 @@ export default function NewPost() {
 		setSubmitting(true);
 
 		try {
-			await post("/posts", { title, content });
+			await post("/posts", { title, content, imageUrl });
 			navigate("/");
 		} catch (err) {
 			setError(err.message);
@@ -35,6 +36,14 @@ export default function NewPost() {
 				value={title}
 				onChange={(event) => setTitle(event.target.value)}
 				required
+			/>
+
+			<label htmlFor="imageUrl">Image URL (optional)</label>
+			<input
+				id="imageUrl"
+				type="url"
+				value={imageUrl}
+				onChange={(event) => setImageUrl(event.target.value)}
 			/>
 
 			<label htmlFor="content">Content</label>

@@ -25,6 +25,7 @@ model Post {
   id        Int       @id @default(autoincrement())
   title     String
   content   String
+  imageUrl  String?
   published Boolean   @default(false)
   createdAt DateTime  @default(now())
   authorId  Int

@@ -36,6 +36,7 @@ describe("NewPost", () => {
 		expect(post).toHaveBeenCalledWith("/posts", {
 			title: "Huelva",
 			content: "A week by the sea.",
+			imageUrl: "",
 		});
 	});
 

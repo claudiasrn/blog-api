@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
-import { get } from "../../utils/api";
+import { get } from "../../lib/api";
 
 export default function Home() {
 	const [data, setData] = useState(null);
@@ -25,6 +25,7 @@ export default function Home() {
 				{data.posts.map((post) => (
 					<li key={post.id}>
 						<Link to={`/posts/${post.id}`}>
+							{post.imageUrl && <img src={post.imageUrl} alt="" />}
 							<h2>{post.title}</h2>
 							<time dateTime={post.createdAt}>
 								{new Date(post.createdAt).toLocaleDateString()}

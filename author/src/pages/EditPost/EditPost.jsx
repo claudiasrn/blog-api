@@ -6,6 +6,7 @@ export default function EditPost() {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [title, setTitle] = useState("");
+	const [imageUrl, setImageUrl] = useState("");
 	const [content, setContent] = useState("");
 	const [loaded, setLoaded] = useState(false);
 	const [error, setError] = useState(null);
@@ -15,6 +16,7 @@ export default function EditPost() {
 		get(`/posts/drafts/${id}`)
 			.then((post) => {
 				setTitle(post.title);
+				setImageUrl(post.imageUrl ?? "");
 				setContent(post.content);
 				setLoaded(true);
 			})
@@ -27,7 +29,7 @@ export default function EditPost() {
 		setSubmitting(true);
 
 		try {
-			await put(`/posts/${id}`, { title, content });
+			await put(`/posts/${id}`, { title, content, imageUrl });
 			navigate("/");
 		} catch (err) {
 			setError(err.message);
@@ -62,6 +64,14 @@ export default function EditPost() {
 					value={title}
 					onChange={(event) => setTitle(event.target.value)}
 					required
+				/>
+
+				<label htmlFor="imageUrl">Image URL (optional)</label>
+				<input
+					id="imageUrl"
+					type="url"
+					value={imageUrl}
+					onChange={(event) => setImageUrl(event.target.value)}
 				/>
 
 				<label htmlFor="content">Content</label>

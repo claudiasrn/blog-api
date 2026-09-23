@@ -15,6 +15,7 @@ export async function getPosts(req, res, next) {
 				select: {
 					id: true,
 					title: true,
+					imageUrl: true,
 					createdAt: true,
 				},
 			}),
@@ -88,6 +89,12 @@ export const validatePost = [
 		.withMessage("Title is too long"),
 
 	body("content").trim().notEmpty().withMessage("Content is required"),
+
+	body("imageUrl")
+		.optional({ values: "falsy" })
+		.trim()
+		.isURL()
+		.withMessage("Image must be a valid URL"),
 ];
 
 export async function createPost(req, res, next) {
@@ -97,11 +104,16 @@ export async function createPost(req, res, next) {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	const { title, content } = req.body;
+	const { title, content, imageUrl } = req.body;
 
 	try {
 		const post = await prisma.post.create({
-			data: { title, content, authorId: req.user.id },
+			data: {
+				title,
+				content,
+				imageUrl: imageUrl || null,
+				authorId: req.user.id,
+			},
 		});
 
 		res.status(201).json(post);
@@ -118,12 +130,12 @@ export async function updatePost(req, res, next) {
 		return res.status(400).json({ errors: errors.array() });
 	}
 
-	const { title, content } = req.body;
+	const { title, content, imageUrl } = req.body;
 
 	try {
 		const result = await prisma.post.updateMany({
 			where: { id },
-			data: { title, content },
+			data: { title, content, imageUrl: imageUrl || null },
 		});
 
 		if (result.count === 0) {
