@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { get, del } from "../../lib/api";
+import styles from "./PostComments.module.css";
 
 export default function PostComments() {
 	const { id } = useParams();
@@ -34,23 +35,35 @@ export default function PostComments() {
 
 	return (
 		<>
-			<h1>Comments on “{post.title}”</h1>
-			<Link to="/">Back to posts</Link>
+			<Link to="/" className={styles.back}>
+				&lt;&lt; back to posts
+			</Link>
 
-			{error && <p>{error}</p>}
+			<h1 className={styles.title}>Comments on “{post.title}”</h1>
+
+			{error && <p className={styles.error}>{error}</p>}
 
 			{comments.length === 0 ? (
-				<p>No comments yet.</p>
+				<p className={styles.empty}>no comments yet</p>
 			) : (
-				<ul>
+				<ul className={styles.list}>
 					{comments.map((comment) => (
-						<li key={comment.id}>
-							<strong>{comment.user.username}</strong>
-							<time dateTime={comment.createdAt}>
-								{new Date(comment.createdAt).toLocaleDateString()}
-							</time>
-							<p>{comment.body}</p>
-							<button onClick={() => handleDelete(comment.id)}>Delete</button>
+						<li key={comment.id} className={styles.comment}>
+							<div>
+								<div className={styles.meta}>
+									<span>{comment.user.username}</span>
+									<time dateTime={comment.createdAt} className={styles.date}>
+										{new Date(comment.createdAt).toLocaleDateString("de-DE")}
+									</time>
+								</div>
+								<p className={styles.body}>{comment.body}</p>
+							</div>
+							<button
+								onClick={() => handleDelete(comment.id)}
+								className={styles.delete}
+							>
+								delete
+							</button>
 						</li>
 					))}
 				</ul>

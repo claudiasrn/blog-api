@@ -1,0 +1,15 @@
+.wrapper {
+	padding: 2rem 0;
+}
+
+.title {
+	font-size: 30px;
+	margin-bottom: 0.5rem;
+}
+
+.text {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--muted);
+	margin: 0 0 1rem;
+}

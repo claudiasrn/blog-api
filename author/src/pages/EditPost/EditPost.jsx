@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { get, put, del } from "../../lib/api";
+import styles from "../../styles/form.module.css";
 
 export default function EditPost() {
 	const { id } = useParams();
@@ -66,12 +67,14 @@ export default function EditPost() {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit}>
-				<h1>Edit post</h1>
+			<form onSubmit={handleSubmit} className={styles.form}>
+				<h1 className={styles.title}>Edit post</h1>
 
-				{error && <p>{error}</p>}
+				{error && <p className={styles.error}>{error}</p>}
 
-				<label htmlFor="title">Title</label>
+				<label htmlFor="title" className={styles.label}>
+					Title
+				</label>
 				<input
 					id="title"
 					value={title}
@@ -79,15 +82,18 @@ export default function EditPost() {
 					required
 				/>
 
-				<label htmlFor="imageUrl">Image URL (optional)</label>
+				<label htmlFor="imageUrl" className={styles.label}>
+					Image URL (optional)
+				</label>
 				<input
 					id="imageUrl"
-					type="url"
 					value={imageUrl}
 					onChange={(event) => setImageUrl(event.target.value)}
 				/>
 
-				<label htmlFor="rating">Rating (1–5, optional)</label>
+				<label htmlFor="rating" className={styles.label}>
+					Rating (1–5, optional)
+				</label>
 				<input
 					id="rating"
 					type="number"
@@ -97,7 +103,9 @@ export default function EditPost() {
 					onChange={(event) => setRating(event.target.value)}
 				/>
 
-				<label htmlFor="tags">Tags (comma separated)</label>
+				<label htmlFor="tags" className={styles.label}>
+					Tags (comma separated)
+				</label>
 				<input
 					id="tags"
 					value={tags}
@@ -105,7 +113,9 @@ export default function EditPost() {
 					placeholder="taunus, day hike"
 				/>
 
-				<label htmlFor="content">Content</label>
+				<label htmlFor="content" className={styles.label}>
+					Content
+				</label>
 				<textarea
 					id="content"
 					value={content}
@@ -114,12 +124,14 @@ export default function EditPost() {
 					required
 				/>
 
-				<button type="submit" disabled={submitting}>
-					{submitting ? "Saving…" : "Save"}
+				<button type="submit" disabled={submitting} className={styles.submit}>
+					{submitting ? "saving…" : "save"}
 				</button>
 			</form>
 
-			<button onClick={handleDelete}>Delete post</button>
+			<button onClick={handleDelete} className={styles.danger}>
+				delete post
+			</button>
 		</>
 	);
 }

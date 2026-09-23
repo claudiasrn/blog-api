@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { post } from "../../lib/api";
 import { useAuth } from "../../context/useAuth";
+import styles from "./Login.module.css";
 
 export default function Login() {
 	const { login } = useAuth();
@@ -28,12 +29,14 @@ export default function Login() {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h1>Log in</h1>
+		<form onSubmit={handleSubmit} className={styles.form}>
+			<h1 className={styles.title}>Log in</h1>
 
-			{error && <p>{error}</p>}
+			{error && <p className={styles.error}>{error}</p>}
 
-			<label htmlFor="username">Username</label>
+			<label htmlFor="username" className={styles.label}>
+				Username
+			</label>
 			<input
 				id="username"
 				value={username}
@@ -41,7 +44,9 @@ export default function Login() {
 				required
 			/>
 
-			<label htmlFor="password">Password</label>
+			<label htmlFor="password" className={styles.label}>
+				Password
+			</label>
 			<input
 				id="password"
 				type="password"
@@ -50,12 +55,12 @@ export default function Login() {
 				required
 			/>
 
-			<button type="submit" disabled={submitting}>
-				{submitting ? "Logging in…" : "Log in"}
+			<button type="submit" disabled={submitting} className={styles.submit}>
+				{submitting ? "logging in…" : "log in"}
 			</button>
 
-			<p>
-				No account? <Link to="/signup">Sign up</Link>
+			<p className={styles.alt}>
+				no account? <Link to="/signup">sign up</Link>
 			</p>
 		</form>
 	);

@@ -1,0 +1,11 @@
+.layout {
+	max-width: var(--panel-width);
+	margin: 0 auto;
+	border: var(--border-frame);
+	background: var(--pink-50);
+	box-shadow: 8px 8px 0 var(--pink-200);
+}
+
+.main {
+	padding: 1.25rem;
+}

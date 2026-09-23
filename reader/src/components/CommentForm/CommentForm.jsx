@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./CommentForm.module.css";
 
 export default function CommentForm({ onSubmit }) {
 	const [body, setBody] = useState("");
@@ -21,9 +22,11 @@ export default function CommentForm({ onSubmit }) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			{error && <p>{error}</p>}
-			<label htmlFor="body">Leave a comment</label>
+		<form onSubmit={handleSubmit} className={styles.form}>
+			{error && <p className={styles.error}>{error}</p>}
+			<label htmlFor="body" className={styles.label}>
+				Leave a comment
+			</label>
 			<textarea
 				id="body"
 				value={body}
@@ -31,7 +34,7 @@ export default function CommentForm({ onSubmit }) {
 				required
 			/>
 			<button type="submit" disabled={submitting}>
-				{submitting ? "Posting…" : "Post comment"}
+				{submitting ? "posting…" : "post comment"}
 			</button>
 		</form>
 	);

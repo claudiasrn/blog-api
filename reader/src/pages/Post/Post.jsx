@@ -5,6 +5,8 @@ import { stars } from "../../lib/stars";
 import { useAuth } from "../../context/useAuth";
 import CommentForm from "../../components/CommentForm/CommentForm";
 import Comment from "../../components/Comment/Comment";
+import divider from "../../assets/divider.png";
+import styles from "./Post.module.css";
 
 export default function Post() {
 	const { id } = useParams();
@@ -44,54 +46,73 @@ export default function Post() {
 	if (!post) return <p>Loading…</p>;
 
 	return (
-		<article>
-			<h1>{post.title}</h1>
-			<time dateTime={post.createdAt}>
-				{new Date(post.createdAt).toLocaleDateString()}
-			</time>
+		<>
+			<Link to="/" className={styles.back}>
+				&lt;&lt; back to the log
+			</Link>
+			<article className={styles.article}>
+				<div className={styles.header}>
+					<span>♡ entry {post.id}</span>
+					<time dateTime={post.createdAt}>
+						{new Date(post.createdAt).toLocaleDateString("de-DE")}
+					</time>
+				</div>
 
-			{post.rating != null && <p>{stars(post.rating)}</p>}
+				<div className={styles.inner}>
+					<h1 className={styles.title}>{post.title}</h1>
 
-			{post.tags.length > 0 && (
-				<ul>
-					{post.tags.map((tag) => (
-						<li key={tag}>{tag}</li>
-					))}
-				</ul>
-			)}
+					{post.rating != null && (
+						<p className={styles.stars}>{stars(post.rating)}</p>
+					)}
 
-			{post.imageUrl && <img src={post.imageUrl} alt="" />}
+					{post.tags.length > 0 && (
+						<ul className={styles.tags}>
+							{post.tags.map((tag) => (
+								<li key={tag} className={styles.tag}>
+									{tag}
+								</li>
+							))}
+						</ul>
+					)}
 
-			<div style={{ whiteSpace: "pre-wrap" }}>{post.content}</div>
+					{post.imageUrl && (
+						<img src={post.imageUrl} alt="" className={styles.photo} />
+					)}
 
-			<section>
-				<h2>Comments</h2>
+					<div className={styles.content}>{post.content}</div>
 
-				{user ? (
-					<CommentForm onSubmit={addComment} />
-				) : (
-					<p>
-						<Link to="/login">Log in</Link> to comment.
-					</p>
-				)}
+					<img src={divider} alt="" className={styles.divider} />
 
-				{!comments ? (
-					<p>Loading comments…</p>
-				) : comments.length === 0 ? (
-					<p>No comments yet.</p>
-				) : (
-					<ul>
-						{comments.map((comment) => (
-							<Comment
-								key={comment.id}
-								comment={comment}
-								onEdit={editComment}
-								onDelete={deleteComment}
-							/>
-						))}
-					</ul>
-				)}
-			</section>
-		</article>
+					<section>
+						<h2 className={styles.commentsTitle}>Comments</h2>
+
+						{user ? (
+							<CommentForm onSubmit={addComment} />
+						) : (
+							<p className={styles.loginPrompt}>
+								<Link to="/login">Log in</Link> to leave a comment
+							</p>
+						)}
+
+						{!comments ? (
+							<p className={styles.empty}>loading comments…</p>
+						) : comments.length === 0 ? (
+							<p className={styles.empty}>no comments yet</p>
+						) : (
+							<ul className={styles.commentList}>
+								{comments.map((comment) => (
+									<Comment
+										key={comment.id}
+										comment={comment}
+										onEdit={editComment}
+										onDelete={deleteComment}
+									/>
+								))}
+							</ul>
+						)}
+					</section>
+				</div>
+			</article>
+		</>
 	);
 }

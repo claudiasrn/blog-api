@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/useAuth";
+import styles from "./Comment.module.css";
 
 export default function Comment({ comment, onEdit, onDelete }) {
 	const { user } = useAuth();
@@ -22,39 +23,43 @@ export default function Comment({ comment, onEdit, onDelete }) {
 	}
 
 	return (
-		<li>
-			<strong>{comment.user.username}</strong>
-			<time dateTime={comment.createdAt}>
-				{new Date(comment.createdAt).toLocaleDateString()}
-			</time>
+		<li className={styles.comment}>
+			<div className={styles.meta}>
+				<span className={styles.author}>{comment.user.username}</span>
+				<time dateTime={comment.createdAt} className={styles.date}>
+					{new Date(comment.createdAt).toLocaleDateString("de-DE")}
+				</time>
+			</div>
 
 			{editing ? (
-				<form onSubmit={handleSave}>
-					{error && <p>{error}</p>}
+				<form onSubmit={handleSave} className={styles.editForm}>
+					{error && <p className={styles.error}>{error}</p>}
 					<textarea
 						value={body}
 						onChange={(event) => setBody(event.target.value)}
 						required
 					/>
-					<button type="submit">Save</button>
-					<button
-						type="button"
-						onClick={() => {
-							setBody(comment.body);
-							setEditing(false);
-						}}
-					>
-						Cancel
-					</button>
+					<div className={styles.editActions}>
+						<button type="submit">save</button>
+						<button
+							type="button"
+							onClick={() => {
+								setBody(comment.body);
+								setEditing(false);
+							}}
+						>
+							cancel
+						</button>
+					</div>
 				</form>
 			) : (
 				<>
-					<p>{comment.body}</p>
+					<p className={styles.body}>{comment.body}</p>
 					{isOwner && (
-						<>
-							<button onClick={() => setEditing(true)}>Edit</button>
-							<button onClick={() => onDelete(comment.id)}>Delete</button>
-						</>
+						<div className={styles.actions}>
+							<button onClick={() => setEditing(true)}>edit</button>
+							<button onClick={() => onDelete(comment.id)}>delete</button>
+						</div>
 					)}
 				</>
 			)}

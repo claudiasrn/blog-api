@@ -1,0 +1,97 @@
+@font-face {
+	font-display: swap;
+	font-family: "Chewy";
+	font-style: normal;
+	font-weight: 400;
+	src: url("./assets/fonts/chewy-v18-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "DM Sans";
+	font-style: normal;
+	font-weight: 400;
+	src: url("./assets/fonts/dm-sans-v17-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "DM Sans";
+	font-style: normal;
+	font-weight: 500;
+	src: url("./assets/fonts/dm-sans-v17-latin-500.woff2") format("woff2");
+}
+
+:root {
+	--pink-50: #fdf6f8;
+	--pink-100: #fbeaf0;
+	--pink-200: #f4c0d1;
+	--pink-400: #d4537e;
+	--pink-600: #993556;
+	--pink-900: #4b1528;
+
+	--ink: #2c2c2a;
+	--muted: #8a7a80;
+
+	--font-display: "Chewy", cursive;
+	--font-body: "DM Sans", system-ui, sans-serif;
+	--font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+	--panel-width: 720px;
+	--border-heavy: 2px solid var(--pink-400);
+	--border-frame: 3px solid var(--pink-600);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 2rem 1rem;
+	background-color: var(--pink-100);
+	color: var(--ink);
+	font-family: var(--font-body);
+	font-size: 20px;
+	line-height: 1.65;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	line-height: 1.2;
+	color: var(--pink-900);
+	margin: 0;
+}
+
+a {
+	color: var(--pink-600);
+}
+
+button {
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+}
+
+input,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+}
+
+@media (max-width: 480px) {
+	body {
+		font-size: 17px;
+		padding: 1rem 0.5rem;
+	}
+}

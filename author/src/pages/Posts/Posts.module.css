@@ -1,0 +1,97 @@
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 17px;
+}
+
+.table th {
+	background: var(--pink-100);
+	border: 1px solid var(--pink-400);
+	font-family: var(--font-mono);
+	font-size: 15px;
+	font-weight: 400;
+	color: var(--pink-900);
+	text-align: left;
+	padding: 0.4rem 0.6rem;
+}
+
+.table td {
+	border: 1px solid var(--pink-200);
+	padding: 0.5rem 0.6rem;
+	vertical-align: middle;
+}
+
+.table tr:hover td {
+	background: var(--pink-50);
+}
+
+.date {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--muted);
+	white-space: nowrap;
+}
+
+.published,
+.draft {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	border-radius: 10px;
+	padding: 2px 8px;
+	white-space: nowrap;
+}
+
+.published {
+	background: var(--pink-900);
+	color: var(--pink-100);
+}
+
+.draft {
+	background: var(--pink-100);
+	color: var(--pink-900);
+	border: 1px solid var(--pink-400);
+}
+
+.actions {
+	display: flex;
+	gap: 0.4rem;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.actions a,
+.actions button {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	background: transparent;
+	border: 1px solid var(--pink-400);
+	border-radius: 10px;
+	color: var(--pink-600);
+	text-decoration: none;
+	padding: 2px 8px;
+}
+
+.actions a:hover,
+.actions button:hover {
+	background: var(--pink-100);
+}
+
+.empty,
+.loading {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--muted);
+}
+
+.error {
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--danger);
+	background: #fcebeb;
+	border: 1px solid var(--danger);
+	padding: 0.4rem 0.5rem;
+}
+
+.tableWrap {
+	overflow-x: auto;
+}

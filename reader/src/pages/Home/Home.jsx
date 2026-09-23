@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { get } from "../../lib/api";
 import { stars } from "../../lib/stars";
+import styles from "./Home.module.css"
 
 export default function Home() {
 	const [data, setData] = useState(null);
@@ -22,22 +23,37 @@ export default function Home() {
 
 	return (
 		<>
-			<ul>
+			<ul className={styles.list}>
 				{data.posts.map((post) => (
-					<li key={post.id}>
-						<Link to={`/posts/${post.id}`}>
-							{post.imageUrl && <img src={post.imageUrl} alt="" />}
-							<h2>{post.title}</h2>
-							<time dateTime={post.createdAt}>
-								{new Date(post.createdAt).toLocaleDateString()}
-							</time>
-							{post.rating != null && <p>{stars(post.rating)}</p>}
+					<li key={post.id} className={styles.entry}>
+						<div className={styles.entryHeader}>
+							<span>♡ entry {post.id}</span>
+							<span>
+								{new Date(post.createdAt).toLocaleDateString("de-DE")}
+							</span>
+						</div>
+
+						<Link to={`/posts/${post.id}`} className={styles.entryLink}>
+							{post.imageUrl ? (
+								<img src={post.imageUrl} alt="" className={styles.thumb} />
+							) : (
+								<div className={styles.thumbEmpty} />
+							)}
+
+							<div className={styles.body}>
+								<h2 className={styles.title}>{post.title}</h2>
+								{post.rating != null && (
+									<p className={styles.stars}>{stars(post.rating)}</p>
+								)}
+							</div>
 						</Link>
 
 						{post.tags.length > 0 && (
-							<ul>
+							<ul className={styles.tags}>
 								{post.tags.map((tag) => (
-									<li key={tag}>{tag}</li>
+									<li key={tag} className={styles.tag}>
+										{tag}
+									</li>
 								))}
 							</ul>
 						)}
@@ -45,21 +61,21 @@ export default function Home() {
 				))}
 			</ul>
 
-			<div>
+			<div className={styles.pagination}>
 				<button
 					onClick={() => setSearchParams({ page: page - 1 })}
 					disabled={page <= 1}
 				>
-					Previous
+					&lt;&lt; prev
 				</button>
 				<span>
-					Page {data.page} of {data.totalPages}
+					page {data.page} / {data.totalPages}
 				</span>
 				<button
 					onClick={() => setSearchParams({ page: page + 1 })}
 					disabled={page >= data.totalPages}
 				>
-					Next
+					next &gt;&gt;
 				</button>
 			</div>
 		</>

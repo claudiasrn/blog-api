@@ -1,0 +1,10 @@
+.layout {
+	max-width: var(--panel-width);
+	margin: 0 auto;
+	border: var(--border-frame);
+	background: #fff;
+}
+
+.main {
+	padding: 1.25rem;
+}

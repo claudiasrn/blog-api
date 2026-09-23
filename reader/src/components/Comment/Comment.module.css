@@ -1,0 +1,71 @@
+.comment {
+	border: 1px solid var(--pink-200);
+	background: var(--pink-50);
+	padding: 0.6rem 0.75rem;
+	margin-bottom: 0.6rem;
+}
+
+.meta {
+	display: flex;
+	gap: 0.6rem;
+	align-items: baseline;
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: var(--pink-600);
+	margin-bottom: 0.3rem;
+}
+
+.author {
+	font-weight: 500;
+}
+
+.date {
+	color: var(--muted);
+}
+
+.body {
+	margin: 0 0 0.4rem;
+	white-space: pre-wrap;
+}
+
+.actions {
+	display: flex;
+	gap: 0.4rem;
+}
+
+.actions button,
+.editActions button {
+	background: transparent;
+	border: 1px solid var(--pink-400);
+	border-radius: 10px;
+	color: var(--pink-600);
+	font-family: var(--font-mono);
+	font-size: 15px;
+	padding: 2px 8px;
+}
+
+.actions button:hover,
+.editActions button:hover {
+	background: var(--pink-100);
+}
+
+.editForm textarea {
+	width: 100%;
+	border: 1px solid var(--pink-400);
+	background: #fff;
+	padding: 0.5rem;
+	margin-bottom: 0.4rem;
+	resize: vertical;
+}
+
+.editActions {
+	display: flex;
+	gap: 0.4rem;
+}
+
+.error {
+	font-family: var(--font-mono);
+	font-size: 20px;
+	color: #a32d2d;
+	margin: 0 0 0.4rem;
+}
