@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { get } from "../../lib/api";
+import { get, put } from "../../lib/api";
 
 export default function Posts() {
 	const [posts, setPosts] = useState(null);
@@ -11,6 +11,15 @@ export default function Posts() {
 			.then(setPosts)
 			.catch((err) => setError(err.message));
 	}, []);
+
+	async function togglePublished(id) {
+		const updated = await put(`/posts/${id}/publish`);
+		setPosts((current) =>
+			current.map((post) =>
+				post.id === id ? { ...post, published: updated.published } : post,
+			),
+		);
+	}
 
 	if (error) return <p>{error}</p>;
 	if (!posts) return <p>Loading…</p>;
@@ -23,7 +32,7 @@ export default function Posts() {
 					<th>Title</th>
 					<th>Date</th>
 					<th>Status</th>
-					<th></th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,6 +42,9 @@ export default function Posts() {
 						<td>{new Date(post.createdAt).toLocaleDateString()}</td>
 						<td>{post.published ? "Published" : "Draft"}</td>
 						<td>
+							<button onClick={() => togglePublished(post.id)}>
+								{post.published ? "Unpublish" : "Publish"}
+							</button>
 							<Link to={`/posts/${post.id}/edit`}>Edit</Link>
 							<Link to={`/posts/${post.id}/comments`}>Comments</Link>
 						</td>
