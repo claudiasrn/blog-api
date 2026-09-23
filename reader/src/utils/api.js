@@ -25,6 +25,10 @@ async function request(path, options = {}) {
 		throw error;
 	}
 
+	if (res.status === 401 && !path.startsWith("/auth/")) {
+		localStorage.removeItem("token");
+	}
+
 	if (res.status === 204) return null;
 
 	return res.json();
