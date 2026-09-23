@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import Login from "./Login";
 
-vi.mock("../../utils/api", () => ({
+vi.mock("../../lib/api", () => ({
 	post: vi.fn(),
 }));
 
@@ -12,7 +12,7 @@ vi.mock("../../context/useAuth", () => ({
 	useAuth: vi.fn(),
 }));
 
-import { post } from "../../utils/api";
+import { post } from "../../lib/api";
 import { useAuth } from "../../context/useAuth";
 
 describe("Login", () => {
