@@ -8,7 +8,16 @@ import { uploadRouter } from "./routers/uploadRouter.js";
 
 const app = express();
 
-app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5174"] }));
+app.use(
+	cors({
+		origin: [
+			"http://localhost:5173",
+			"http://localhost:5174",
+			"https://blog-api-reader-claudia.netlify.app",
+			"https://blog-api-claudia.netlify.app/login",
+		],
+	}),
+);
 app.use(express.json());
 
 app.use("/auth", authRouter);
