@@ -45,8 +45,8 @@ describe("Posts", () => {
 		renderPosts();
 
 		expect(await screen.findByText("Huelva")).toBeInTheDocument();
-		expect(screen.getByText("Published")).toBeInTheDocument();
-		expect(screen.getByText("Draft")).toBeInTheDocument();
+		expect(screen.getByText("published")).toBeInTheDocument();
+		expect(screen.getByText("draft")).toBeInTheDocument();
 	});
 
 	it("labels the toggle according to the current status", async () => {
