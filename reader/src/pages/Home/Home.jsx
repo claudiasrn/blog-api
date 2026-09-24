@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import { get } from "../../lib/api";
 import { stars } from "../../lib/stars";
-import styles from "./Home.module.css"
+import styles from "./Home.module.css";
 
 export default function Home() {
 	const [data, setData] = useState(null);
@@ -35,7 +35,9 @@ export default function Home() {
 
 						<Link to={`/posts/${post.id}`} className={styles.entryLink}>
 							{post.imageUrl ? (
-								<img src={post.imageUrl} alt="" className={styles.thumb} />
+								<div className={styles.thumbWrap}>
+									<img src={post.imageUrl} alt="" className={styles.thumb} />
+								</div>
 							) : (
 								<div className={styles.thumbEmpty} />
 							)}
@@ -45,18 +47,17 @@ export default function Home() {
 								{post.rating != null && (
 									<p className={styles.stars}>{stars(post.rating)}</p>
 								)}
+								{post.tags.length > 0 && (
+									<ul className={styles.tags}>
+										{post.tags.map((tag) => (
+											<li key={tag} className={styles.tag}>
+												{tag}
+											</li>
+										))}
+									</ul>
+								)}
 							</div>
 						</Link>
-
-						{post.tags.length > 0 && (
-							<ul className={styles.tags}>
-								{post.tags.map((tag) => (
-									<li key={tag} className={styles.tag}>
-										{tag}
-									</li>
-								))}
-							</ul>
-						)}
 					</li>
 				))}
 			</ul>
