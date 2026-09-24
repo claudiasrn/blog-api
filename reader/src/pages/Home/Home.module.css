@@ -31,7 +31,8 @@
 
 .thumb {
 	flex: 0 0 116px;
-	height: 88px;
+	align-self: stretch;
+	height: auto;
 	border: var(--border-heavy);
 	object-fit: cover;
 }
