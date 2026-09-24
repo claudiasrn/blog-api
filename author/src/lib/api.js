@@ -56,3 +56,24 @@ export function put(path, body) {
 export function del(path) {
 	return request(path, { method: "DELETE" });
 }
+
+export async function uploadFile(path, file) {
+	const token = localStorage.getItem("token");
+	const formData = new FormData();
+	formData.append("image", file);
+
+	const res = await fetch(`${BASE_URL}${path}`, {
+		method: "POST",
+		headers: {
+			...(token && { Authorization: `Bearer ${token}` }),
+		},
+		body: formData,
+	});
+
+	if (!res.ok) {
+		const data = await res.json().catch(() => ({}));
+		throw new Error(data.message ?? "Upload failed");
+	}
+
+	return res.json();
+}

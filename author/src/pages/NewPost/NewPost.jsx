@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { post } from "../../lib/api";
+import { post, uploadFile } from "../../lib/api";
 import styles from "../../styles/form.module.css";
 
 export default function NewPost() {
@@ -12,6 +12,25 @@ export default function NewPost() {
 	const [content, setContent] = useState("");
 	const [error, setError] = useState(null);
 	const [submitting, setSubmitting] = useState(false);
+	const [uploading, setUploading] = useState(false);
+	const [uploadError, setUploadError] = useState(null);
+
+	async function handleFileChange(event) {
+		const file = event.target.files[0];
+		if (!file) return;
+
+		setUploadError(null);
+		setUploading(true);
+
+		try {
+			const data = await uploadFile("/uploads", file);
+			setImageUrl(data.url);
+		} catch (err) {
+			setUploadError(err.message);
+		} finally {
+			setUploading(false);
+		}
+	}
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -52,8 +71,35 @@ export default function NewPost() {
 				required
 			/>
 
+			<label htmlFor="image" className={styles.label}>
+				Image
+			</label>
+			<input
+				id="image"
+				type="file"
+				accept="image/*"
+				onChange={handleFileChange}
+				disabled={uploading}
+			/>
+
+			{uploading && <p className={styles.hint}>uploading…</p>}
+			{uploadError && <p className={styles.error}>{uploadError}</p>}
+
+			{imageUrl && (
+				<>
+					<img src={imageUrl} alt="" className={styles.preview} />
+					<button
+						type="button"
+						onClick={() => setImageUrl("")}
+						className={styles.removeImage}
+					>
+						remove image
+					</button>
+				</>
+			)}
+
 			<label htmlFor="imageUrl" className={styles.label}>
-				Image URL (optional)
+				Image URL
 			</label>
 			<input
 				id="imageUrl"
