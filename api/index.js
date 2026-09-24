@@ -14,7 +14,7 @@ app.use(
 			"http://localhost:5173",
 			"http://localhost:5174",
 			"https://blog-api-reader-claudia.netlify.app",
-			"https://blog-api-claudia.netlify.app/login",
+			"https://blog-api-claudia.netlify.app",
 		],
 	}),
 );
