@@ -7,6 +7,22 @@ Hosted on free tiers, so the first request may take a minute while the server an
 
 The point of this project is separating the backend from whatever consumes it. One Express API serves JSON to two React apps that share no code: a public reader where anyone can browse posts and comment, and a private author dashboard where posts are written, published and moderated. Neither frontend knows anything about the database; both talk to the same endpoints.
 
+## The author dashboard
+
+The admin side isn't publicly linked — it's behind a login and only users with `isAuthor` can reach it. Screenshots instead:
+
+![Post list with publish toggles](docs/author-posts.png)
+
+Every post, published or draft, with one-click publishing.
+
+![Editing a post](docs/author-edit.png)
+
+Images upload straight to Supabase Storage and the returned URL fills the field.
+
+![Comment moderation](docs/author-comments.png)
+
+Comments on a single post, with delete.
+
 ## Structure
 
 | Folder | What it is | Runs on |
